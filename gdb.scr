@@ -1,0 +1,15 @@
+target remote localhost:3333
+
+monitor reset halt
+
+set remotetimeout 20000
+
+print $mode
+load
+
+if $mode == 0
+    monitor resume
+    quit
+else
+    tui enable
+end

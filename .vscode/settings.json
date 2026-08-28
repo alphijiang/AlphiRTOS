@@ -1,0 +1,6 @@
+{
+  "C_Cpp.default.compilerPath": "/opt/riscv/bin/riscv64-unknown-elf-gcc",
+  "C_Cpp.default.intelliSenseMode": "gcc-x86",
+  "C_Cpp.default.cStandard": "c11",
+  "C_Cpp.default.cppStandard": "c++17"
+}

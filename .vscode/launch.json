@@ -1,0 +1,36 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "RTOS Debug",
+      "type": "cortex-debug",
+      "request": "launch",
+
+      "servertype": "openocd",
+      "serverpath": "/opt/openocd/bin/openocd",
+
+      "executable": "${workspaceFolder}/firmware.elf",
+
+      "configFiles": [
+        "${workspaceFolder}/ft232h.cfg"
+      ],
+
+      "gdbPath": "/opt/riscv/bin/riscv64-unknown-elf-gdb",
+
+      "gdbTarget": "localhost:3333",
+
+      "svdFile": "${workspaceFolder}/eh2.svd",
+"preLaunchCommands": [
+  "monitor reset halt",
+  "load",
+  "monitor halt",
+  "b main"
+],
+"overrideLaunchCommands": [
+  "monitor halt"
+],
+
+      "showDevDebugOutput": "raw"
+    }
+  ]
+}

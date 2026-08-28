@@ -1,0 +1,128 @@
+[
+  {
+    "arguments": [
+      "/opt/riscv/bin/riscv64-unknown-elf-gcc",
+      "-march=rv32imac_zicsr_zifencei",
+      "-mabi=ilp32",
+      "-falign-functions=16",
+      "-mstrict-align",
+      "-mcmodel=medany",
+      "-ffunction-sections",
+      "-fdata-sections",
+      "-g3",
+      "-O2",
+      "-c",
+      "-o",
+      "syscall.o",
+      "syscall.c"
+    ],
+    "directory": "/data/project/syntronix/FW/20_T12_EH2/veerwolf_fw/eh2/stx_v2/rtos",
+    "file": "/data/project/syntronix/FW/20_T12_EH2/veerwolf_fw/eh2/stx_v2/rtos/syscall.c",
+    "output": "/data/project/syntronix/FW/20_T12_EH2/veerwolf_fw/eh2/stx_v2/rtos/syscall.o"
+  },
+  {
+    "arguments": [
+      "/opt/riscv/bin/riscv64-unknown-elf-gcc",
+      "-march=rv32imac_zicsr_zifencei",
+      "-mabi=ilp32",
+      "-falign-functions=16",
+      "-mstrict-align",
+      "-mcmodel=medany",
+      "-ffunction-sections",
+      "-fdata-sections",
+      "-g3",
+      "-O2",
+      "-c",
+      "-o",
+      "uart.o",
+      "uart.c"
+    ],
+    "directory": "/data/project/syntronix/FW/20_T12_EH2/veerwolf_fw/eh2/stx_v2/rtos",
+    "file": "/data/project/syntronix/FW/20_T12_EH2/veerwolf_fw/eh2/stx_v2/rtos/uart.c",
+    "output": "/data/project/syntronix/FW/20_T12_EH2/veerwolf_fw/eh2/stx_v2/rtos/uart.o"
+  },
+  {
+    "arguments": [
+      "/opt/riscv/bin/riscv64-unknown-elf-gcc",
+      "-march=rv32imac_zicsr_zifencei",
+      "-mabi=ilp32",
+      "-falign-functions=16",
+      "-mstrict-align",
+      "-mcmodel=medany",
+      "-ffunction-sections",
+      "-fdata-sections",
+      "-g3",
+      "-O2",
+      "-c",
+      "-o",
+      "rtos.o",
+      "rtos.c"
+    ],
+    "directory": "/data/project/syntronix/FW/20_T12_EH2/veerwolf_fw/eh2/stx_v2/rtos",
+    "file": "/data/project/syntronix/FW/20_T12_EH2/veerwolf_fw/eh2/stx_v2/rtos/rtos.c",
+    "output": "/data/project/syntronix/FW/20_T12_EH2/veerwolf_fw/eh2/stx_v2/rtos/rtos.o"
+  },
+  {
+    "arguments": [
+      "/opt/riscv/bin/riscv64-unknown-elf-gcc",
+      "-march=rv32imac_zicsr_zifencei",
+      "-mabi=ilp32",
+      "-falign-functions=16",
+      "-mstrict-align",
+      "-mcmodel=medany",
+      "-ffunction-sections",
+      "-fdata-sections",
+      "-g3",
+      "-O2",
+      "-c",
+      "-o",
+      "main.o",
+      "main.c"
+    ],
+    "directory": "/data/project/syntronix/FW/20_T12_EH2/veerwolf_fw/eh2/stx_v2/rtos",
+    "file": "/data/project/syntronix/FW/20_T12_EH2/veerwolf_fw/eh2/stx_v2/rtos/main.c",
+    "output": "/data/project/syntronix/FW/20_T12_EH2/veerwolf_fw/eh2/stx_v2/rtos/main.o"
+  },
+  {
+    "arguments": [
+      "/opt/riscv/bin/riscv64-unknown-elf-gcc",
+      "-march=rv32imac_zicsr_zifencei",
+      "-mabi=ilp32",
+      "-falign-functions=16",
+      "-mstrict-align",
+      "-mcmodel=medany",
+      "-ffunction-sections",
+      "-fdata-sections",
+      "-g3",
+      "-O2",
+      "-c",
+      "-o",
+      "crt0.o",
+      "crt0.S"
+    ],
+    "directory": "/data/project/syntronix/FW/20_T12_EH2/veerwolf_fw/eh2/stx_v2/rtos",
+    "file": "/data/project/syntronix/FW/20_T12_EH2/veerwolf_fw/eh2/stx_v2/rtos/crt0.S",
+    "output": "/data/project/syntronix/FW/20_T12_EH2/veerwolf_fw/eh2/stx_v2/rtos/crt0.o"
+  },
+  {
+    "arguments": [
+      "/opt/riscv/bin/riscv64-unknown-elf-gcc",
+      "-march=rv32imac_zicsr_zifencei",
+      "-mabi=ilp32",
+      "-falign-functions=16",
+      "-mstrict-align",
+      "-mcmodel=medany",
+      "-ffunction-sections",
+      "-fdata-sections",
+      "-g3",
+      "-O2",
+      "-c",
+      "-o",
+      "kernel.o",
+      "kernel.S"
+    ],
+    "directory": "/data/project/syntronix/FW/20_T12_EH2/veerwolf_fw/eh2/stx_v2/rtos",
+    "file": "/data/project/syntronix/FW/20_T12_EH2/veerwolf_fw/eh2/stx_v2/rtos/kernel.S",
+    "output": "/data/project/syntronix/FW/20_T12_EH2/veerwolf_fw/eh2/stx_v2/rtos/kernel.o"
+  }
+]

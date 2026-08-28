@@ -1,0 +1,41 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build RTOS",
+            "type": "shell",
+            "command": "/opt/riscv/bin/riscv64-unknown-elf-gcc",
+            "args": [
+                "-march=rv32imac_zicsr_zifencei",
+                "-mabi=ilp32",
+                "-mstrict-align",
+                "-falign-functions=16",
+                "-ffunction-sections",
+                "-fdata-sections",
+                "-g3",
+                "-O2",
+                "-I${workspaceFolder}",
+                "${workspaceFolder}/crt0.S",
+                "${workspaceFolder}/main.c",
+                "${workspaceFolder}/uart.c",
+                "${workspaceFolder}/syscall.c",
+                "${workspaceFolder}/rtos.c",
+                "${workspaceFolder}/kernel.S",
+                "-Wl,-T${workspaceFolder}/link.ld",
+                "-Wl,--gc-sections",
+                "--specs=nosys.specs",
+                "--specs=nano.specs",
+                "-nostartfiles",
+                "-o",
+                "${workspaceFolder}/firmware.elf"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        }
+    ]
+}
