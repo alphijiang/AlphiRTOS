@@ -22,22 +22,7 @@ void exit_critical(uint32_t mstatus_val) {
 /* 初始化任務堆疊：嚴格對應 kernel.S 的 128 bytes 影格結構 */
 void rtos_create_task(int tid, void (*entry)(void)) {
     if (tid < 0 || tid >= MAX_TASKS) return;
-  #if 0 
-    uint32_t *stack_top = &task_stacks[tid][STACK_SIZE];
-    uint32_t *frame = stack_top - 32; /* 128 bytes / 4 = 32 words */
-    
-    /* 1. 清空暫存器空間 */
-    for (int i = 0; i < 32; i++) {
-        frame[i] = 0;
-    }
-    
-    /* 2. 依照 kernel.S 的還原順序填入初始值 */
-    frame[0]  = (uint32_t)entry;          /* x1 (ra) 初始返回點 */
-    frame[30] = (uint32_t)entry;          /* mepc (offset 120): 第一次 mret 執行的 PC */
-    frame[31] = 0x00001880;               /* mstatus (offset 124): 修正為 MPP = 11 (M-mode) */
 
-     tasks[tid].sp = entry ? frame : NULL; /* 如果 entry 為 NULL，則不分配堆疊 */
-#else
     uint32_t *sp = (uint32_t *)&task_stacks[tid][STACK_SIZE];
     *--sp = 0x00001880;                /* mstatus : 修正為 MPP = 11 (M-mode) */
     *--sp = (uint32_t)entry;           /* mepc    第一次 mret 執行的 PC     */
@@ -74,13 +59,14 @@ void rtos_create_task(int tid, void (*entry)(void)) {
 
      tasks[tid].sp = entry ? sp : NULL; /* 如果 entry 為 NULL，則不分配堆疊 */
           
-#endif
    
     tasks[tid].stage = STAGE_READY;
 }
 
 /* C 語言排程器 (對應 kernel.S 傳入的 sp) */
 uint32_t schedule(uint32_t sp) {
+
+    
     if (tasks[current_task].stage == STAGE_RUNNING) {
         tasks[current_task].stage = STAGE_READY;
     }
@@ -100,15 +86,16 @@ uint32_t schedule(uint32_t sp) {
     current_task = next_task;
     tasks[current_task].stage = STAGE_RUNNING;
 
-    /* 重設 SweRV EH2 內部計時器 (MIT0) 載入值，維持週期觸發 */
-    write_csr(MITCNT0, 0);
+    /* 重設 SweRV EH2 MTIMER，維持週期觸發 */
+    SYSCON->MTIMECMP = SYSCON->MTIME + (SYSCON->CLK_FREQ_HZ / 100); // 重設計數器初值
 
     /* 回傳新任務的 sp 給 kernel.S */
     return (uint32_t)tasks[current_task].sp;
 }
 
-/* 初始化 EH2 內部機器計時器 (對應 eh2.h / main.c 規格) */
+/* 初始化 EH2 MTIMER */
 void rtos_timer_init(void) {
+    uint32_t mask = 0;
     uint32_t r = 0;
 
     // 停用全域中斷 (使用 csrrc 讀取原值並清除 MSTATUS 的 MIE 位元)
@@ -116,22 +103,14 @@ void rtos_timer_init(void) {
     
     write_csr(MCAUSE, 0);
 
-    // 停用 timer0 (MIT0)
-    write_csr(MITCTL0, 0);
-    // 設定計數器初值
-    write_csr(MITCNT0, 0);
-    // 設定計時器重載值 (以系統頻率的一定比例作為時間片)
-    #ifdef SYSCON
-    write_csr(MITB0, SYSCON->CLK_FREQ_HZ / 100);
-    #else
-    write_csr(MITB0, 500000); 
-    #endif
 
-    // 啟用 timer0 中斷 (使用 csrrs 讀取原值並設定 MIE 的對應 IRQ 位元)
-    __asm__ volatile ("csrrs %[out], mie, %[mask]" : [out]"=r"(r) : [mask]"r"(1 << TIMER0_IRQn));
+    SYSCON->MTIME = 0; // 設定計數器初值
+    SYSCON->MTIMECMP = SYSCON->CLK_FREQ_HZ / 100; // 設定計時器重載值 (以系統頻率的一定比例作為時間片)
+    // 啟用  中斷 (使用 csrrs 讀取原值並設定 MIE 的對應 IRQ 位元)
+    __asm__ volatile ("csrrs %[out], mie, %[mask]" : [out]"=r"(r) : [mask]"r"(1 << 7));
 
     // 啟動 MIT0
-    write_csr(MITCTL0, 0x1);
+    //write_csr(MITCTL0, 0x1);
 
     // 恢復 MSTATUS 中斷致能 (使用 csrrs 讀取原值並設定 MSTATUS 的 MIE 位元)
     __asm__ volatile ("csrrs %[out], mstatus, %[mask]" : [out]"=r"(r) : [mask]"r"(1 << EH2_MSTATUS_MIE));
