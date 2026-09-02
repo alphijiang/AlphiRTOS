@@ -27,9 +27,9 @@ ENTRY( _start )
 MEMORY
 {
   
-  ROM  (wxa!ri) : ORIGIN = 0x90000000, LENGTH = 256M
-  ICCM (wxa!ri) : ORIGIN = 0xEE000000, LENGTH = 128K
-  DCCM (wxa!ri) : ORIGIN = 0xF0040000, LENGTH = 256K
+  RAM  (wxa!ri) : ORIGIN = 0x00000000, LENGTH = 128M
+  ICCM (wxa!ri) : ORIGIN = 0xEE000000, LENGTH = 64K
+  DCCM (wxa!ri) : ORIGIN = 0xF0040000, LENGTH = 32K
 }
 
 
