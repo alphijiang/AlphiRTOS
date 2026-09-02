@@ -1,10 +1,8 @@
 #ifndef __RTOS_H__
 #define __RTOS_H__
 
-#include <stdint.h>
 #include <stddef.h>
 #include "eh2.h"
-#include "defines.h"
 
 #define MAX_TASKS       10 /* TASK 最多執行數量 */ 
 #define STACK_SIZE      256
