@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include "eh2.h"
 #include "uart.h"
-#include "trap.h"
 #include "rtos.h"
 
 
@@ -54,8 +53,6 @@ void task9_entry(void) {
 int main()
 {
 
-    // 1. 設定中斷向量表指向 kernel.S 的 trap_entry
-    //__asm__ volatile("csrw mtvec, %0" : : "r"(trap_entry));
     UartInit(SYSCON->CLK_FREQ_HZ,115200);
 
     printf("\nAlphi aRTOS\r\n");
