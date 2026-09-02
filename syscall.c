@@ -6,8 +6,8 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include "defines.h"
 #include "eh2.h"
+#include "uart.h"
 
 #ifndef __SEMIHOSTING
 
@@ -19,10 +19,8 @@ int _write (int file, char *ptr, int len)
     /* Turn character to capital letter and output to UART port */
     for (i = 0; i < len; i++)
     {
-        while (!(UART->LSR & LSR_THRE))
-            ;
-
-        UART->THR = *ptr++;
+        uart_putc(((int)*ptr++));
+        
         //whisperPutc(((int)*ptr++));
     }
 
