@@ -1,7 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdint.h>
-#include "defines.h"
 #include "eh2.h"
 #include "uart.h"
 #include "trap.h"
