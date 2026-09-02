@@ -38,7 +38,7 @@ void rtos_create_task(int tid, void (*entry)(void)) {
 
      tasks[tid].sp = entry ? frame : NULL; /* 如果 entry 為 NULL，則不分配堆疊 */
 #else
-    uint32_t *sp = &task_stacks[tid][STACK_SIZE];
+    uint32_t *sp = (uint32_t *)&task_stacks[tid][STACK_SIZE];
     *--sp = 0x00001880;                /* mstatus : 修正為 MPP = 11 (M-mode) */
     *--sp = (uint32_t)entry;           /* mepc    第一次 mret 執行的 PC     */
     *--sp = 0;                         /* x31 (t6) */
@@ -128,7 +128,7 @@ void rtos_timer_init(void) {
     #endif
 
     // 啟用 timer0 中斷 (使用 csrrs 讀取原值並設定 MIE 的對應 IRQ 位元)
-    __asm__ volatile ("csrrs %[out], mie, %[mask]" : [out]"=r"(r) : [mask]"r"(1 << EH2_TIMER0_IRQ_NUM));
+    __asm__ volatile ("csrrs %[out], mie, %[mask]" : [out]"=r"(r) : [mask]"r"(1 << TIMER0_IRQn));
 
     // 啟動 MIT0
     write_csr(MITCTL0, 0x1);
