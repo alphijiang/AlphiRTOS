@@ -33,6 +33,8 @@
 #ifndef EH2_H
 #define EH2_H
 
+#include <stdint.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -77,31 +79,6 @@ typedef enum {
 #endif
 #ifndef __IOM                                   /*!< Fallback for older CMSIS versions                                         */
   #define __IOM  __IO
-#endif
-
-
-/* ========================================  Start of section using anonymous unions  ======================================== */
-#if defined (__CC_ARM)
-  #pragma push
-  #pragma anon_unions
-#elif defined (__ICCARM__)
-  #pragma language=extended
-#elif defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
-  #pragma clang diagnostic push
-  #pragma clang diagnostic ignored "-Wc11-extensions"
-  #pragma clang diagnostic ignored "-Wreserved-id-macro"
-  #pragma clang diagnostic ignored "-Wgnu-anonymous-struct"
-  #pragma clang diagnostic ignored "-Wnested-anon-types"
-#elif defined (__GNUC__)
-  /* anonymous unions are enabled by default */
-#elif defined (__TMS470__)
-  /* anonymous unions are enabled by default */
-#elif defined (__TASKING__)
-  #pragma warning 586
-#elif defined (__CSMC__)
-  /* anonymous unions are enabled by default */
-#else
-  #warning Not supported compiler type
 #endif
 
 
